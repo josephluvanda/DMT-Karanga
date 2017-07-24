@@ -144,7 +144,7 @@
 							<!-- Menu Footer-->
 							<li class="user-footer">
 								<div class="pull-left">
-									<a href="{{ url(config('laraadmin.adminRoute') . '/users/') .'/'. Auth::user()->id }}" class="btn btn-default btn-flat">Profile</a>
+									<a href="{{ url(config('laraadmin.adminRoute') . '/employees/') .'/'. Auth::user()->context_id .'/edit' }}" class="btn btn-default btn-flat">Profile</a>
 								</div>
 								<div class="pull-right">
 									<a href="{{ url('/logout') }}" class="btn btn-default btn-flat">Sign out</a>
@@ -157,7 +157,7 @@
 				<!-- Control Sidebar Toggle Button -->
 				<li>
 					<a href="#" data-toggle="control-sidebar"><i class="fa fa-comments-o"></i> <span class="label label-warning">10</span></a>
-					
+
 				</li>
 				@endif
 			</ul>

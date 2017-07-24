@@ -21,6 +21,9 @@ Route::get('/access_request', function(){
 });
 
 Route::post('/access_request', 'LA\RegistrationsController@access_request');
+Route::get('/email_verification/{token}', 'LA\RegistrationsController@email_verification');
+
+
 /* ================== Homepage + Admin Routes ================== */
 
 require __DIR__.'/admin_routes.php';

@@ -19,6 +19,10 @@ use Dwij\Laraadmin\Models\ModuleFields;
 use Illuminate\Support\Facades\Log;
 
 use App\Models\Registration;
+use Mail;
+use App\User;
+use App\Models\Employee;
+use App\Role;
 
 class RegistrationsController extends Controller
 {
@@ -175,7 +179,54 @@ class RegistrationsController extends Controller
 			if ($validator->fails()) {
 				return redirect()->back()->withErrors($validator)->withInput();;
 			}
-			Log::info($request);
+			//Log::info($request);
+			//TODO, restrict to one status change , delete registration after status change
+			$registration  = Registration::findOrFail($id);
+
+			if( $registration->status == 'Requested' and $request['status'] != $registration->status ){
+
+				$data = array(
+					'title' => "DMT - Karanga Request Status",
+					'content' => "Your request has been ". $request['status']
+				);
+
+				if( $request['status'] == 'Approved'  && $registration->email_verified == 'Verified'){
+					// Create user from registration details
+					$employee = new Employee;
+					$full_name = join(' ', array($registration->firstname, $registration->middlename, $registration->surname));
+					$employee->name = $full_name;
+					$employee->designation = 'User';
+					$employee->mobile = $registration->mobile;
+					$employee->email = $registration->email;
+
+					$employee->save();
+					$password = rand(1000, 9999);
+					//User
+					$user = User::create([
+						'name' => $full_name,
+						'email' => $registration->email,
+						'password' => bcrypt($password),
+						'context_id' =>$employee->id,
+						'type' => "Employee",
+					]);
+					$defaultRole = Role::where('name', 'GUEST')->first();
+					// update user role
+					$user->detachRoles();
+					$user->attachRole($defaultRole);
+
+					$data['username'] = $user->email;
+					$data['password'] = $password;
+				}
+				try {
+					Mail::send('emails.request', $data, function ($message) {
+							$message->from('joseph@codefortanzania.org', 'DMT - Karanga');
+							$message->to('joseph@codefortanzania.org');
+							$message->subject("DMT - Karanga Request Status");
+					});
+				} catch (Exception $e) {
+					Log::error($e->getMessage);
+				}
+			}
 			$insert_id = Module::updateRow("Registrations", $request, $id);
 
 			return redirect()->route(config('laraadmin.adminRoute') . '.registrations.index');
@@ -273,12 +324,38 @@ class RegistrationsController extends Controller
 	      $registration->email = $request->email;
 	      $registration->mobile = $request->mobile;
 	      $registration->registration_reason = $request->registration_reason;
+				$registration->verification_token = md5($registration->surname.' '.$registration->email);
 	      $registration->save();
 
-	      return redirect('access_request')->with('message', "Your request is being processed. We'll notify you once done");
+				$data = array('registration' => $registration);
+				try {
+					Mail::send('emails.verify', $data, function ($message) use ($registration) {
+							$message->from('joseph@codefortanzania.org', 'DMT - Karanga');
+							$message->to($registration->email);
+							$message->subject("DMT - Karanga Request Status");
+					});
+				} catch (Exception $e) {
+					Log::error($e->getMessage);
+				}
+
+	      return redirect('access_request')->with('message', "We have received your request and sent an email verification. Please check your email for confirmation.");
 
 	    }
-
 	 }
 
+	 /**
+	  *Email verification
+		*
+		*/
+		public function email_verification(Request $request, $token){
+
+			$registration = Registration::where('verification_token', $token)->first();
+			if( $registration != NULL || !empty($registration)){
+				$registration->email_verified = 'Verified';
+				$registration->save();
+				return view('auth.email_verification', ['verified' => true]);
+			}else{
+				return view('auth.email_verification', ['verified' => false]);
+			}
+		}
 }

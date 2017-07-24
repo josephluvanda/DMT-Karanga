@@ -18,8 +18,10 @@ class CreateRegistrationsTable extends Migration
     public function up()
     {
         Module::generate("Registrations", 'registrations', 'email', 'fa-graduation-cap', [
+            ["email_verified", "Email Verified", "Dropdown", false, "Unverified", 0, 0, false, ["Unverified","Verified"]],
+            ["verification_token", "Verification Token", "TextField", false, "", 0, 256, false],
             ["email", "Email", "Email", true, "", 0, 256, false],
-            ["status", "Status", "Integer", false, "1", 0, 11, false],
+            ["status", "Status", "Dropdown", false, "Requested", 0, 11, false, ["Requested","Approved","Declined"]],
             ["firstname", "Firstname", "Name", false, "", 0, 256, true],
             ["middlename", "Middlename", "Name", false, "", 0, 256, false],
             ["surname", "Surname", "Name", false, "", 0, 256, true],
