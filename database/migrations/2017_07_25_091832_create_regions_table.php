@@ -26,8 +26,8 @@ class CreateRegionsTable extends Migration
      */
     public function down()
     {
-        if (Schema::hasTable('registrations')) {
-            Schema::drop('registrations');
+        if (Schema::hasTable('regions')) {
+            Schema::drop('regions');
         }
     }
 }
