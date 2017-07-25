@@ -74,4 +74,20 @@ Route::group(['as' => $as, 'middleware' => ['auth', 'permission:ADMIN_PANEL', 'n
 	/* ================== Registrations ================== */
 	Route::resource(config('laraadmin.adminRoute') . '/registrations', 'LA\RegistrationsController');
 	Route::get(config('laraadmin.adminRoute') . '/registration_dt_ajax', 'LA\RegistrationsController@dtajax');
+
+	/* ================== Regions ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/regions', 'LA\RegionsController');
+	Route::get(config('laraadmin.adminRoute') . '/region_dt_ajax', 'LA\RegionsController@dtajax');
+
+	/* ================== Districts ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/districts', 'LA\DistrictsController');
+	Route::get(config('laraadmin.adminRoute') . '/district_dt_ajax', 'LA\DistrictsController@dtajax');
+
+	/* ================== Wards ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/wards', 'LA\WardsController');
+	Route::get(config('laraadmin.adminRoute') . '/ward_dt_ajax', 'LA\WardsController@dtajax');
+
+	/* ================== Categories ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/categories', 'LA\CategoriesController');
+	Route::get(config('laraadmin.adminRoute') . '/category_dt_ajax', 'LA\CategoriesController@dtajax');
 });
