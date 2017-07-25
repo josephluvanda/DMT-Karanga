@@ -12,7 +12,7 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Module::generate("Categories", 'categories', 'name', 'fa-th-list', [
+        Module::generate("Categories", 'categories', 'title', 'fa-th-list', [
             ["title", "Title", "TextField", false, "", 0, 256, true],
             ["description", "Description", "Textarea", false, "", 0, 0, false],
             ["slug", "SLug", "TextField", false, "", 0, 256, true],
