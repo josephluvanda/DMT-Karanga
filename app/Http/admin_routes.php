@@ -78,4 +78,8 @@ Route::group(['as' => $as, 'middleware' => ['auth', 'permission:ADMIN_PANEL']], 
 	/* ================== Regions ================== */
 	Route::resource(config('laraadmin.adminRoute') . '/regions', 'LA\RegionsController');
 	Route::get(config('laraadmin.adminRoute') . '/region_dt_ajax', 'LA\RegionsController@dtajax');
+
+	/* ================== Districts ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/districts', 'LA\DistrictsController');
+	Route::get(config('laraadmin.adminRoute') . '/district_dt_ajax', 'LA\DistrictsController@dtajax');
 });
