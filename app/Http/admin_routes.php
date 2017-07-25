@@ -86,4 +86,8 @@ Route::group(['as' => $as, 'middleware' => ['auth', 'permission:ADMIN_PANEL']], 
 	/* ================== Wards ================== */
 	Route::resource(config('laraadmin.adminRoute') . '/wards', 'LA\WardsController');
 	Route::get(config('laraadmin.adminRoute') . '/ward_dt_ajax', 'LA\WardsController@dtajax');
+
+	/* ================== Categories ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/categories', 'LA\CategoriesController');
+	Route::get(config('laraadmin.adminRoute') . '/category_dt_ajax', 'LA\CategoriesController@dtajax');
 });
