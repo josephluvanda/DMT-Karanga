@@ -14,8 +14,8 @@ class CreateRegionsTable extends Migration
     {
         Module::generate("Regions", 'regions', 'name', 'fa-cube', [
             ["name", "Name", "TextField", false, "", 0, 256, true],
-            ["position", "Position", "TextField", true, "", 0, 20, false],
-            ["description", "Description", "Textarea", false, "", 0, 0, true],
+            ["position", "Position", "TextField", false, "", 0, 20, true],
+            ["description", "Description", "Textarea", false, "", 0, 0, false],
         ]);
     }
 
