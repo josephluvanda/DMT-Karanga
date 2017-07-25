@@ -10,7 +10,9 @@ use Eloquent;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
+use Auth;
 class AuthController extends Controller
 {
     /*
@@ -33,6 +35,9 @@ class AuthController extends Controller
      */
     protected $redirectTo = '/';
 
+    protected $maxLoginAttempts = 5;
+    protected $lockoutTime = 1;
+
     /**
      * Create a new authentication controller instance.
      *
@@ -41,6 +46,8 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        $this->maxLoginAttempts = 5;
+        $this->lockoutTime = 1;
     }
 
     public function showRegistrationForm()
@@ -134,4 +141,5 @@ class AuthController extends Controller
 
         return $user;
     }
+    //TODO, Account blocking on failed user attempts
 }
