@@ -90,4 +90,8 @@ Route::group(['as' => $as, 'middleware' => ['auth', 'permission:ADMIN_PANEL', 'n
 	/* ================== Categories ================== */
 	Route::resource(config('laraadmin.adminRoute') . '/categories', 'LA\CategoriesController');
 	Route::get(config('laraadmin.adminRoute') . '/category_dt_ajax', 'LA\CategoriesController@dtajax');
+
+	/* ================== Documents ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/documents', 'LA\DocumentsController');
+	Route::get(config('laraadmin.adminRoute') . '/document_dt_ajax', 'LA\DocumentsController@dtajax');
 });

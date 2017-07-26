@@ -15,7 +15,7 @@ class CreateCategoriesTable extends Migration
         Module::generate("Categories", 'categories', 'title', 'fa-th-list', [
             ["title", "Title", "TextField", false, "", 0, 256, true],
             ["description", "Description", "Textarea", false, "", 0, 0, false],
-            ["slug", "SLug", "TextField", false, "", 0, 256, true],
+            ["slug", "Slug", "TextField", false, "", 0, 256, true],
         ]);
     }
 
