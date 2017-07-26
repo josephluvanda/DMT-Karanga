@@ -28,7 +28,7 @@ class CategoriesController extends Controller
 {
 	public $show_action = true;
 	public $view_col = 'title';
-	public $listing_cols = ['id', 'title','description', 'slug'];
+	public $listing_cols = ['id', 'title','description', 'slug', 'added_by'];
 
 	public function __construct() {
 		// Field Access of Listing Columns
