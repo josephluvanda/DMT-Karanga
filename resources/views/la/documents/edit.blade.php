@@ -1,14 +1,14 @@
 @extends("la.layouts.app")
 
 @section("contentheader_title")
-	<a href="{{ url(config('laraadmin.adminRoute') . '/categories') }}">Category</a> :
+	<a href="{{ url(config('laraadmin.adminRoute') . '/documents') }}">Documents</a> :
 @endsection
-@section("contentheader_description", $category->$view_col)
-@section("section", "Categories")
-@section("section_url", url(config('laraadmin.adminRoute') . '/categories'))
+@section("contentheader_description", $document->$view_col)
+@section("section", "Documents")
+@section("section_url", url(config('laraadmin.adminRoute') . '/documents'))
 @section("sub_section", "Edit")
 
-@section("htmlheader_title", "Categories Edit : ".$category->$view_col)
+@section("htmlheader_title", "Document Edit : ".$document->$view_col)
 
 @section("main-content")
 
@@ -29,17 +29,20 @@
 	<div class="box-body">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
-				{!! Form::model($category, ['route' => [config('laraadmin.adminRoute') . '.categories.update', $category->id ], 'method'=>'PUT', 'id' => 'category-edit-form']) !!}
+				{!! Form::model($document, ['route' => [config('laraadmin.adminRoute') . '.documents.update', $document->id ], 'method'=>'PUT', 'id' => 'document-edit-form']) !!}
 					@la_form($module)
 					
 					{{--
-					@la_input($module, 'name')
-					@la_input($module, 'position')
+					@la_input($module, 'title')
+					@la_input($module, 'category')
+					@la_input($module, 'document')
 					@la_input($module, 'description')
+					@la_input($module, 'tags')
+					@la_input($module, 'public')
 					--}}
                     <br>
 					<div class="form-group">
-						{!! Form::submit( 'Update', ['class'=>'btn btn-success']) !!} <button class="btn btn-default pull-right"><a href="{{ url(config('laraadmin.adminRoute') . '/categories') }}">Cancel</a></button>
+						{!! Form::submit( 'Update', ['class'=>'btn btn-success']) !!} <button class="btn btn-default pull-right"><a href="{{ url(config('laraadmin.adminRoute') . '/documents') }}">Cancel</a></button>
 					</div>
 				{!! Form::close() !!}
 			</div>
@@ -52,7 +55,7 @@
 @push('scripts')
 <script>
 $(function () {
-	$("#category-edit-form").validate({
+	$("#document-edit-form").validate({
 		
 	});
 });

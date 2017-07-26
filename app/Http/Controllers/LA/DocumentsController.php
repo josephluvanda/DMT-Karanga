@@ -18,7 +18,7 @@ use Dwij\Laraadmin\Models\Module;
 use Dwij\Laraadmin\Models\ModuleFields;
 use Illuminate\Support\Facades\Log;
 
-use App\Models\Category;
+use App\Models\Document;
 use Mail;
 use App\User;
 use App\Models\Employee;
@@ -109,7 +109,7 @@ class DocumentsController extends Controller
 	{
 		if(Module::hasAccess("Documents", "view")) {
 
-			$document = Category::find($id);
+			$document = Document::find($id);
 			if(isset($document->id)) {
 				$module = Module::get('Documents');
 				$module->row = $document;
@@ -140,7 +140,7 @@ class DocumentsController extends Controller
 	public function edit($id)
 	{
 		if(Module::hasAccess("Documents", "edit")) {
-			$document = Category::find($id);
+			$document = Document::find($id);
 			if(isset($document->id)) {
 				$module = Module::get('Documents');
 
@@ -181,7 +181,7 @@ class DocumentsController extends Controller
 			}
 			//Log::info($request);
 			//TODO, restrict to one status change , delete document after status change
-			$document  = Category::findOrFail($id);
+			$document  = Document::findOrFail($id);
 
 			$insert_id = Module::updateRow("Documents", $request, $id);
 
@@ -201,7 +201,7 @@ class DocumentsController extends Controller
 	public function destroy($id)
 	{
 		if(Module::hasAccess("Documents", "delete")) {
-			Category::find($id)->delete();
+			Document::find($id)->delete();
 
 			// Redirecting to index() method
 			return redirect()->route(config('laraadmin.adminRoute') . '.documents.index');
