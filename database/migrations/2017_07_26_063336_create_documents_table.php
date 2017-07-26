@@ -15,10 +15,10 @@ class CreateDocumentsTable extends Migration
         Module::generate("Documents", 'documents', 'title', 'fa-file', [
             ["title", "Title", "TextField", false, "", 5, 250, true],
             ["category", "Category", "Dropdown", false, "1", 0, 0, true, "@categories"],
+            ["document", "Document File", "File", false, "", 0, 250, true],
             ["description", "Description", "Textarea", false, "", 0, 0, true],
             ["tags", "Tags", "Taginput", false, [], 0, 0, false],
             ["public", "Is Public", "Checkbox", false, "0", 0, 0, false],
-            ["document", "Document File", "File", false, "", 0, 250, false],
         ]);
     }
 

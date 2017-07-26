@@ -28,7 +28,7 @@ class DocumentsController extends Controller
 {
 	public $show_action = true;
 	public $view_col = 'title';
-	public $listing_cols = ['id', 'title','description', 'category_id', 'tags'];
+	public $listing_cols = ['id', 'title','description', 'category', 'tags'];
 
 	public function __construct() {
 		// Field Access of Listing Columns
