@@ -25,7 +25,6 @@
 @endif
 
 <div class="box box-success">
-	{{ Auth::user()->id }}
 	<!--<div class="box-header"></div>-->
 	<div class="box-body">
 		<table id="example1" class="table table-bordered">
@@ -64,6 +63,10 @@
 					@la_input($module, 'description')
 					@la_input($module, 'slug')
 					--}}
+
+					<div class="form-group">
+						<input class="form-control" placeholder="Enter Added By" data-rule-maxlength="256" name="added_by" value="{{ Auth::user()->id }}" type="hidden">
+					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
