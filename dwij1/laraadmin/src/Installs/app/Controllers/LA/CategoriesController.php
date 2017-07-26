@@ -141,21 +141,27 @@ class CategoriesController extends Controller
 	{
 		if(Module::hasAccess("Categories", "edit")) {
 			$category = Category::find($id);
-			if(isset($category->id)) {
-				$module = Module::get('Categories');
 
-				$module->row = $category;
+			//Validating user to edit.
+			if(Auth::user()->id == $category->id)
+			{
+				if(isset($category->id)) {
+					$module = Module::get('Categories');
 
-				return view('la.categories.edit', [
-					'module' => $module,
-					'view_col' => $this->view_col,
-				])->with('category', $category);
-			} else {
-				return view('errors.404', [
-					'record_id' => $id,
-					'record_name' => ucfirst("category"),
-				]);
+					$module->row = $category;
+
+					return view('la.categories.edit', [
+						'module' => $module,
+						'view_col' => $this->view_col,
+					])->with('category', $category);
+				} else {
+					return view('errors.404', [
+						'record_id' => $id,
+						'record_name' => ucfirst("category"),
+					]);
+				}
 			}
+			else return redirect(config('laraadmin.adminRoute')."/categories");
 		} else {
 			return redirect(config('laraadmin.adminRoute')."/");
 		}
@@ -201,7 +207,14 @@ class CategoriesController extends Controller
 	public function destroy($id)
 	{
 		if(Module::hasAccess("Categories", "delete")) {
-			Category::find($id)->delete();
+			$category = Category::find($id);
+
+			//Validating user to delete.
+			if(Auth::user()->id == $category->id)
+			{
+				Category::find($id)->delete();
+			}
+			else return redirect(config('laraadmin.adminRoute')."/categories");
 
 			// Redirecting to index() method
 			return redirect()->route(config('laraadmin.adminRoute') . '.categories.index');
@@ -239,14 +252,18 @@ class CategoriesController extends Controller
 
 			if($this->show_action) {
 				$output = '';
-				if(Module::hasAccess("Categories", "edit")) {
-					$output .= '<a href="'.url(config('laraadmin.adminRoute') . '/categories/'.$data->data[$i][0].'/edit').'" class="btn btn-warning btn-xs" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-edit"></i></a>';
-				}
 
-				if(Module::hasAccess("Categories", "delete")) {
-					$output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.categories.destroy', $data->data[$i][0]], 'method' => 'delete', 'style'=>'display:inline']);
-					$output .= ' <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-times"></i></button>';
-					$output .= Form::close();
+				// Validating user to delete.
+				if(Auth::user()->id == $data->data[$i][0]){
+					if(Module::hasAccess("Categories", "edit")) {
+						$output .= '<a href="'.url(config('laraadmin.adminRoute') . '/categories/'.$data->data[$i][0].'/edit').'" class="btn btn-warning btn-xs" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-edit"></i></a>';
+					}
+
+					if(Module::hasAccess("Categories", "delete")) {
+						$output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.categories.destroy', $data->data[$i][0]], 'method' => 'delete', 'style'=>'display:inline']);
+						$output .= ' <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-times"></i></button>';
+						$output .= Form::close();
+					}
 				}
 				$data->data[$i][] = (string)$output;
 			}
