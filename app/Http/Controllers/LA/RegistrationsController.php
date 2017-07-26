@@ -211,7 +211,7 @@ class RegistrationsController extends Controller
 					]);
 					$defaultRole = Role::where('name', 'GUEST')->first();
 					// update user role
-					$user->detachRoles();
+					//$user->detachRoles();
 					$user->attachRole($defaultRole);
 
 					$data['username'] = $user->email;

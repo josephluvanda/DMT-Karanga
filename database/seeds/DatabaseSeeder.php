@@ -84,27 +84,27 @@ class DatabaseSeeder extends Seeder
 
 		$laconfig = new LAConfigs;
 		$laconfig->key = "sitename";
-		$laconfig->value = "LaraAdmin 1.0";
+		$laconfig->value = "DMT Karanga";
 		$laconfig->save();
 
 		$laconfig = new LAConfigs;
 		$laconfig->key = "sitename_part1";
-		$laconfig->value = "Lara";
+		$laconfig->value = "DMT";
 		$laconfig->save();
 
 		$laconfig = new LAConfigs;
 		$laconfig->key = "sitename_part2";
-		$laconfig->value = "Admin 1.0";
+		$laconfig->value = "Karanga";
 		$laconfig->save();
 
 		$laconfig = new LAConfigs;
 		$laconfig->key = "sitename_short";
-		$laconfig->value = "LA";
+		$laconfig->value = "DMT";
 		$laconfig->save();
 
 		$laconfig = new LAConfigs;
 		$laconfig->key = "site_description";
-		$laconfig->value = "LaraAdmin is a open-source Laravel Admin Panel for quick-start Admin based applications and boilerplate for CRM or CMS systems.";
+		$laconfig->value = "Kyela Data Management Portal.";
 		$laconfig->save();
 
 		// Display Configurations
@@ -148,7 +148,7 @@ class DatabaseSeeder extends Seeder
 
 		$laconfig = new LAConfigs;
 		$laconfig->key = "default_email";
-		$laconfig->value = "test@example.com";
+		$laconfig->value = "jo@localhost.com";
 		$laconfig->save();
 
 		$modules = Module::all();
@@ -158,7 +158,7 @@ class DatabaseSeeder extends Seeder
 		}
 
 		$this->call('RolesTableSeeder');
-		$this->command->info('Roles table seeded')
+		$this->command->info('Roles table seeded');
 
 	}
 }
