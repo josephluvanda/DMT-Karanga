@@ -25,7 +25,6 @@
 @endif
 
 <div class="box box-success">
-	{{ Auth::user()->id }}
 	<!--<div class="box-header"></div>-->
 	<div class="box-body">
 		<table id="example1" class="table table-bordered">
