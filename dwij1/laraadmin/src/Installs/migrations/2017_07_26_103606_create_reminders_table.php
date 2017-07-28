@@ -8,7 +8,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Dwij\Laraadmin\Models\Module;
 
-class CreateEmployeesTable extends Migration
+class CreateRemindersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,27 +17,17 @@ class CreateEmployeesTable extends Migration
      */
     public function up()
     {
-        Schema::disableForeignKeyConstraints();
-        Module::generate("Employees", 'employees', 'name', 'fa-group', [
-            ["name", "Name", "Name", false, "", 5, 250, true],
-            ["designation", "Designation", "String", false, "", 0, 50, true],
-            ["gender", "Gender", "Radio", false, "Male", 0, 0, true, ["Male","Female"]],
-            ["mobile", "Mobile", "Mobile", false, "", 10, 20, true],
-            ["mobile2", "Alternative Mobile", "Mobile", false, "", 10, 20, false],
-            ["email", "Email", "Email", true, "", 5, 250, true],
-            ["dept", "Department", "Dropdown", false, "0", 0, 0, true, "@departments"],
-            ["address", "Address", "Address", false, "", 0, 1000, false],
-            ["about", "About", "String", false, "", 0, 0, false],
-            ["region_id", "Region", "Dropdown", false, "", 0, 0, false, "@regions"],
-            ["district_id", "District", "Dropdown", false, "", 0, 0, false, "@districts"],
-            ["ward_id", "Ward", "Dropdown", false, "", 0, 0, false, "@wards"],
+        Module::generate("Reminders", 'reminders', 'email', 'fa-clock-o', [
+            ["email", "Email", "Email", false, "", 0, 256, false],
+            ["data_category", "Data Category", "Dropdown", false, "", 0, 0, false, "@categories"],
+            ["duration", "Duration", "Dropdown", false, "", 0, 0, false, ["Daily","Weekly","Monthly","Yearly"]],
         ]);
-
+		
 		/*
 		Row Format:
 		["field_name_db", "Label", "UI Type", "Unique", "Default_Value", "min_length", "max_length", "Required", "Pop_values"]
         Module::generate("Module_Name", "Table_Name", "view_column_name" "Fields_Array");
-
+        
 		Module::generate("Books", 'books', 'name', [
             ["address",     "Address",      "Address",  false, "",          0,  1000,   true],
             ["restricted",  "Restricted",   "Checkbox", false, false,       0,  0,      false],
@@ -67,7 +57,6 @@ class CreateEmployeesTable extends Migration
             ["website",     "Website",      "URL",      false, "http://dwij.in", 0, 0,  false],
         ]);
 		*/
-      Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -77,8 +66,8 @@ class CreateEmployeesTable extends Migration
      */
     public function down()
     {
-        if (Schema::hasTable('employees')) {
-            Schema::drop('employees');
+        if (Schema::hasTable('reminders')) {
+            Schema::drop('reminders');
         }
     }
 }

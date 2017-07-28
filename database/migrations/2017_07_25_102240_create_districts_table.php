@@ -27,7 +27,9 @@ class CreateDistrictsTable extends Migration
     public function down()
     {
         if (Schema::hasTable('districts')) {
+            Schema::disableForeignKeyConstraints();
             Schema::drop('districts');
+            Schema::disableForeignKeyConstraints();
         }
     }
 }

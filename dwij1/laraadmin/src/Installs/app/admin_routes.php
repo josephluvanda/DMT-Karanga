@@ -94,4 +94,8 @@ Route::group(['as' => $as, 'middleware' => ['auth', 'permission:ADMIN_PANEL', 'n
 	/* ================== Documents ================== */
 	Route::resource(config('laraadmin.adminRoute') . '/documents', 'LA\DocumentsController');
 	Route::get(config('laraadmin.adminRoute') . '/document_dt_ajax', 'LA\DocumentsController@dtajax');
+
+	/* ================== Employees ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/employees', 'LA\EmployeesController');
+	Route::get(config('laraadmin.adminRoute') . '/employee_dt_ajax', 'LA\EmployeesController@dtajax');
 });

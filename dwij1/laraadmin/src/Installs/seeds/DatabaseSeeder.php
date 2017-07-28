@@ -160,5 +160,7 @@ class DatabaseSeeder extends Seeder
 		$this->call('RolesTableSeeder');
 		$this->command->info('Roles table seeded');
 
+		$this->call('TopologySeeder');
+
 	}
 }

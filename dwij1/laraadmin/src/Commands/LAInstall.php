@@ -34,7 +34,7 @@ class LAInstall extends Command
 	protected $to;
 
 	#var $modelsInstalled = ["User", "Role", "Permission", "Employee", "Department", "Upload", "Organization", "Backup"];
-	var $modelsInstalled = ["User", "Role", "Permission", "Employee", "Department", "Upload", "Organization", "Backup", "Registration"];
+	var $modelsInstalled = ["User", "Role", "Permission", "Employee", "Department", "Upload", "Organization", "Backup"];
 
 	/**
 	 * Generate Whole structure for /admin
@@ -317,13 +317,13 @@ class LAInstall extends Command
 						'email' => $data['email'],
 						'gender' => 'Male',
 						'dept' => "1",
-						'city' => "Dar es Salaam",
+						#'city' => "Dar es Salaam",
 						'address' => "Zanaki, Kisutu junction",
 						'about' => "About user / biography",
-						'date_birth' => date("Y-m-d"),
-						'date_hire' => date("Y-m-d"),
-						'date_left' => date("Y-m-d"),
-						'salary_cur' => 0,
+						#'date_birth' => date("Y-m-d"),
+						#'date_hire' => date("Y-m-d"),
+						#'date_left' => date("Y-m-d"),
+						#'salary_cur' => 0,
 					]);
 
 					$this->info("Super Admin User '".$data['name']."' successfully created. ");

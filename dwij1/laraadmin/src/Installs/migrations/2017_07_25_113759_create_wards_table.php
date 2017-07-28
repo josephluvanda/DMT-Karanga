@@ -27,7 +27,9 @@ class CreateWardsTable extends Migration
     public function down()
     {
         if (Schema::hasTable('wards')) {
+            Schema::disableForeignKeyConstraints();
             Schema::drop('wards');
+            Schema::enableForeignKeyConstraints();
         }
     }
 }

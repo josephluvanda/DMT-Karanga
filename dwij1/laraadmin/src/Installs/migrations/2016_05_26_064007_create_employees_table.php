@@ -4,7 +4,6 @@
  * Help: http://laraadmin.com
  */
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Dwij\Laraadmin\Models\Module;
@@ -18,6 +17,7 @@ class CreateEmployeesTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Module::generate("Employees", 'employees', 'name', 'fa-group', [
             ["name", "Name", "Name", false, "", 5, 250, true],
             ["designation", "Designation", "String", false, "", 0, 50, true],
@@ -26,20 +26,18 @@ class CreateEmployeesTable extends Migration
             ["mobile2", "Alternative Mobile", "Mobile", false, "", 10, 20, false],
             ["email", "Email", "Email", true, "", 5, 250, true],
             ["dept", "Department", "Dropdown", false, "0", 0, 0, true, "@departments"],
-            ["city", "City", "String", false, "", 0, 50, false],
             ["address", "Address", "Address", false, "", 0, 1000, false],
             ["about", "About", "String", false, "", 0, 0, false],
-            ["date_birth", "Date of Birth", "Date", false, "1990-01-01", 0, 0, false],
-            ["date_hire", "Hiring Date", "Date", false, "date('Y-m-d')", 0, 0, false],
-            ["date_left", "Resignation Date", "Date", false, "1990-01-01", 0, 0, false],
-            ["salary_cur", "Current Salary", "Decimal", false, "0.0", 0, 2, false],
+            ["region_id", "Region", "Dropdown", false, "", 0, 0, false, "@regions"],
+            ["district_id", "District", "Dropdown", false, "", 0, 0, false, "@districts"],
+            ["ward_id", "Ward", "Dropdown", false, "", 0, 0, false, "@wards"],
         ]);
-		
+
 		/*
 		Row Format:
 		["field_name_db", "Label", "UI Type", "Unique", "Default_Value", "min_length", "max_length", "Required", "Pop_values"]
         Module::generate("Module_Name", "Table_Name", "view_column_name" "Fields_Array");
-        
+
 		Module::generate("Books", 'books', 'name', [
             ["address",     "Address",      "Address",  false, "",          0,  1000,   true],
             ["restricted",  "Restricted",   "Checkbox", false, false,       0,  0,      false],
@@ -69,6 +67,7 @@ class CreateEmployeesTable extends Migration
             ["website",     "Website",      "URL",      false, "http://dwij.in", 0, 0,  false],
         ]);
 		*/
+      Schema::enableForeignKeyConstraints();
     }
 
     /**
