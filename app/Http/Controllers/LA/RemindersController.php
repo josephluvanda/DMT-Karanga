@@ -84,6 +84,16 @@ class RemindersController extends Controller
 			if ($validator->fails()) {
 				return redirect()->back()->withErrors($validator)->withInput();
 			}
+
+			// Calculating Days To Send upload reminder.
+			$days_to_send = 0;
+			if($request->duration == "Daily") $days_to_send = 0;
+			else if($request->duration == "Weekly") $days_to_send = 7;
+			else if($request->duration == "Monthly") $days_to_send = 30;
+			else if($request->duration == "Yearly") $days_to_send = 365;
+			else $days_to_send = 0;
+
+			$request->days_to_send = $days_to_send;
 			
 			$insert_id = Module::insert("Reminders", $request);
 			

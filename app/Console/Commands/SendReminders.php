@@ -41,12 +41,59 @@ class SendReminders extends Command
     {
         //Sending email
         $reminders = Reminder::all();
+        $days_to_send = 0;
+        $send = false;
 
         foreach($reminders as $reminder){
-            Mail::queue('emails.reminders',[$reminder],function($m) use($reminder){
-                $m->from('no-reply@databoksi.codefortanzania.org');
-                $m->to($reminder->email)->subject('Your '.$reminder->duration.' Document Upload Reminder'); 
-            });
+            // Checking for days to send
+            if($reminder->duration == "Daily"){
+                if($reminder->days_to_send == 0){
+                    $send = true;
+                    $days_to_send = 0;
+                }
+            }
+            else if($reminder->duration == "Weekly"){
+                if($reminder->days_to_send == 0){
+                    $send = true;
+                    $days_to_send = 7;
+                }
+                else{
+                    $days_to_send = $reminder->days_to_send - 1;
+                }
+            }
+            else if($reminder->duration == "Monthly"){
+                if($reminder->days_to_send == 0){
+                    $send = true;
+                    $days_to_send = 30;
+                }
+                else{
+                    $days_to_send = $reminder->days_to_send - 1;
+                }
+            }
+            else if($reminder->duration == "Yearly"){
+                if($reminder->days_to_send == 0){
+                    $send = true;
+                    $days_to_send = 365;
+                }
+                else{
+                    $days_to_send = $reminder->days_to_send - 1;
+                }
+            }
+
+            // Adding to queue
+            if($send){
+                Mail::queue('emails.reminders',[$reminder],function($m) use($reminder){
+                    $m->from('no-reply@databoksi.codefortanzania.org');
+                    $m->to($reminder->email)->subject('Your '.$reminder->duration.' Document Upload Reminder'); 
+                });
+            }
+
+            // Update reminder days to send
+            $reminder = Reminder::find($reminder->id);
+            $reminder->days_to_send = $days_to_send;
+            $reminder->save();
+
+            $send = false;
         }
     }
 }

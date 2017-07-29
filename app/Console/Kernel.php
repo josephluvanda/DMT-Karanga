@@ -28,6 +28,6 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
         // Sending document upload reminders.
-        //$schedule->command('SendReminders')->daily();
+        $schedule->command('SendReminders')->daily();
     }
 }
