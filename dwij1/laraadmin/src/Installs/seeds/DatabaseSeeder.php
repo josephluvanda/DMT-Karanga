@@ -116,7 +116,7 @@ class DatabaseSeeder extends Seeder
 
 		$laconfig = new LAConfigs;
 		$laconfig->key = "show_messages";
-		$laconfig->value = "1";
+		$laconfig->value = "0";
 		$laconfig->save();
 
 		$laconfig = new LAConfigs;
@@ -126,12 +126,12 @@ class DatabaseSeeder extends Seeder
 
 		$laconfig = new LAConfigs;
 		$laconfig->key = "show_tasks";
-		$laconfig->value = "1";
+		$laconfig->value = "0";
 		$laconfig->save();
 
 		$laconfig = new LAConfigs;
 		$laconfig->key = "show_rightsidebar";
-		$laconfig->value = "1";
+		$laconfig->value = "";
 		$laconfig->save();
 
 		$laconfig = new LAConfigs;
