@@ -18,6 +18,8 @@ class CreateCategoriesTable extends Migration
     public function up()
     {
         Module::generate("Categories", 'categories', 'title', 'fa-th-list', [
+            ["background_color", "Background Color", "Dropdown", false, "grey", 0, 0, false, ["grey","white"]],
+            ["border_bottom", "Border Bottom", "Dropdown", false, "yellow", 0, 0, false, ["yellow","red","green"]],
             ["title", "Title", "TextField", false, "", 0, 256, true],
             ["category_image", "Category Image", "Image", false, "", 0, 0, false],
             ["description", "Description", "Textarea", false, "", 0, 0, false],

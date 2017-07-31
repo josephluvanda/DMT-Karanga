@@ -29,15 +29,17 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 brand">
-                    <img src="images/logo.png" class="pull-left" />
-                    <h1>DATA<span>BOKSI</span></h1>
+                    <a href="/">
+                        <img src="images/logo.png" class="pull-left" />
+                        <h1>DATA<span>BOKSI</span></h1>
+                    </a>
                 </div>
                 <div class="col-md-8 navs">
                     <ul>
                         <li><a href="#" data-toggle="modal" data-target="#LoginModal">Login</a></li>
                         <li><a href="#" data-toggle="modal" data-target="#JoinModal">Join</a></li>
-                        <li>Datasets</li>
-                        <li class="active">Home</li>
+                        <li><a href="#">Datasets</a></li>
+                        <li class="active"><a href="">Home</a></li>
                     </ul>
                 </div>
             </div><!-- close div .row -->
@@ -66,69 +68,30 @@
     <br />
 
     <div class="container contents">
-        <div class="row featured">
-            <h1>DATASET CATEGORIES</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                <br />Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-            <hr />
-        </div>
+        @if(count($categories) > 0)
+            <div class="row featured">
+                <h1>DATASET CATEGORIES</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    <br />Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <hr />
+            </div>
 
-        <br />
-        <br />
+            <br />
+            <br />
 
-        <div class="row">
-            <div class="col-md-4">
-                <div class="dataset type-1 border-bottom-10px-yellow">
-                    <img src="images/first-aid-kit.png" />
-                    <h3>AFYA</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-               <div class="dataset type-2 border-bottom-10px-red">
-                    <img src="images/harvest.png" />
-                    <h3>KILIMO</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="dataset type-1 border-bottom-10px-green">
-                    <img src="images/cow.png" />
-                    <h3>MIFUGO</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-            </div>
-        </div><!-- close div .row -->
-
-        <br />
-        <br />
-
-        <div class="row">
-            <div class="col-md-4">
-                <div class="dataset type-1 border-bottom-10px-yellow">
-                    <img src="images/books.png" />
-                    <h3>ELIMU</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-               <div class="dataset type-1 border-bottom-10px-red">
-                    <img src="images/house.png" />
-                    <h3>MAJENGO</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="dataset type-1 border-bottom-10px-green">
-                    <img src="images/economy.png" />
-                    <h3>UCHUMI</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-            </div>
-        </div><!-- close div .row -->
-
-        <br />
+            <div class="row">
+                @foreach($categories as $category)
+                    <div class="col-md-4">
+                        <div class="dataset background_{{$category->background_color}} border_bottom_{{$category->border_bottom}}">
+                            <img src="files/{{$category->upload->hash}}/{{$category->upload->name}}" />
+                            <h3>{{ $category->title }}</h3>
+                            <p>{{ $category->description }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div><!-- close div .row -->
+        @endif
         <br />
         <br />
 

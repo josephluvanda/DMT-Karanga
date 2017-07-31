@@ -46,34 +46,54 @@ body header{
     font-size: 18px;
     float: right;
     margin-left: 40px;
-    cursor: pointer;
     line-height: 90px;
     font-weight: bold;
 }
 
-.navs ul li.active{
-    color: #e86e62;
-}
-
 .navs ul li a:link{
     text-decoration: none;
-    color: #76888c;
-}
-
-.navs ul li a:hover{
-    text-decoration: none;
-    color: #dadfe0;
+    color:#76888c;
 }
 
 .navs ul li a:active{
     text-decoration: none;
-    color: #76888c;
+    color:#76888c;
 }
 
 .navs ul li a:visited{
     text-decoration: none;
-    color: #76888c;
+    color:#76888c;
 }
+
+.navs ul li a:hover{
+    text-decoration: none;
+    color:#dadfe0;
+}
+
+.navs ul li.active{
+    color:#e86e62;
+}
+
+.navs ul li.active a:link{
+    text-decoration: none;
+    color:#e86e62;
+}
+
+.navs ul li.active a:active{
+    text-decoration: none;
+    color:#e86e62;
+}
+
+.navs ul li.active a:visited{
+    text-decoration: none;
+    color:#e86e62;
+}
+
+.navs ul li.active a:hover{
+    text-decoration: none;
+    color:#dadfe0;
+}
+
 
 .search{
     background: #dadfe0;
@@ -143,10 +163,12 @@ body header{
     text-align: center;
     color: #788a8e;
     padding: 30px;
+    margin-bottom: 40px;
 }
 
 .dataset h3{
     font-weight: bold;
+    text-transform: uppercase;
 }
 
 .dataset img{
@@ -154,11 +176,11 @@ body header{
     margin-top: 40px;
 }
 
-.type-1{
+.type-1, .background_grey{
     background: #dadfe0;
 }
 
-.type-2{
+.type-2, .background_white{
     background: #fff;
 }
 
@@ -173,15 +195,15 @@ body header{
     margin-top: 0px;
 }
 
-.border-bottom-10px-yellow{
+.border-bottom-10px-yellow, .border_bottom_yellow{
     border-bottom: 10px solid #fbcf61;
 }
 
-.border-bottom-10px-red{
+.border-bottom-10px-red, .border_bottom_red{
     border-bottom: 10px solid #ff6f6f;
 }
 
-.border-bottom-10px-green{
+.border-bottom-10px-green, .border_bottom_green{
     border-bottom: 10px solid #a8d164;
 }
 
@@ -231,6 +253,11 @@ footer{
 }
 
 footer h4{
+
+}
+
+.modal {
+    background: rgba(0, 0, 0, 0.4);
 }
 
 .modal-dialog{

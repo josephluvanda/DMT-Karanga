@@ -107,6 +107,8 @@
 						<h4>General Info</h4>
 					</div>
 					<div class="panel-body">
+						@la_display($module, 'background_color')
+						@la_display($module, 'border_bottom')
 						@la_display($module, 'title')
 						@la_display($module, 'category_image')
 						@la_display($module, 'description')
