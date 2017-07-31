@@ -38,8 +38,8 @@
                     <ul>
                         <li><a href="#" data-toggle="modal" data-target="#LoginModal">Login</a></li>
                         <li><a href="#" data-toggle="modal" data-target="#JoinModal">Join</a></li>
-                        <li><a href="#">Datasets</a></li>
-                        <li class="active"><a href="">Home</a></li>
+                        <li><a href="/datasets">Datasets</a></li>
+                        <li class="active"><a href="/">Home</a></li>
                     </ul>
                 </div>
             </div><!-- close div .row -->
