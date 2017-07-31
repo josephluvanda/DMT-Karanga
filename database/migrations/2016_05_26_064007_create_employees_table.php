@@ -17,6 +17,7 @@ class CreateEmployeesTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Module::generate("Employees", 'employees', 'name', 'fa-group', [
             ["name", "Name", "Name", false, "", 5, 250, true],
             ["designation", "Designation", "String", false, "", 0, 50, true],
@@ -36,12 +37,12 @@ class CreateEmployeesTable extends Migration
             ["district_id", "District", "Dropdown", false, "", 0, 0, false, "@districts"],
             ["ward_id", "Ward", "Dropdown", false, "", 0, 0, false, "@wards"],
         ]);
-		
+
 		/*
 		Row Format:
 		["field_name_db", "Label", "UI Type", "Unique", "Default_Value", "min_length", "max_length", "Required", "Pop_values"]
         Module::generate("Module_Name", "Table_Name", "view_column_name" "Fields_Array");
-        
+
 		Module::generate("Books", 'books', 'name', [
             ["address",     "Address",      "Address",  false, "",          0,  1000,   true],
             ["restricted",  "Restricted",   "Checkbox", false, false,       0,  0,      false],
@@ -81,6 +82,7 @@ class CreateEmployeesTable extends Migration
     public function down()
     {
         if (Schema::hasTable('employees')) {
+            Schema::disableForeignKeyConstraints();
             Schema::drop('employees');
         }
     }

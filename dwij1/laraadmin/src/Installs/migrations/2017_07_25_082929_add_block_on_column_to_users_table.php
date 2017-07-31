@@ -25,7 +25,11 @@ class AddBlockOnColumnToUsersTable extends Migration
     public function down()
     {
       Schema::table('users', function (Blueprint $table) {
-        $table->dropColumn('blocked_on');
+
+        if(Schema::hasColumn('users','blocked_on')){
+          $table->dropColumn('blocked_on');
+        }
+
       });
     }
 }

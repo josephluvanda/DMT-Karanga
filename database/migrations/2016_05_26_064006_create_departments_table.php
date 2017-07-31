@@ -18,17 +18,18 @@ class CreateDepartmentsTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Module::generate("Departments", 'departments', 'name', 'fa-tags', [
             ["name", "Name", "Name", true, "", 1, 250, true],
             ["tags", "Tags", "Taginput", false, [], 0, 0, false],
             ["color", "Color", "String", false, "", 0, 50, true],
         ]);
-		
+
 		/*
 		Row Format:
 		["field_name_db", "Label", "UI Type", "Unique", "Default_Value", "min_length", "max_length", "Required", "Pop_values"]
         Module::generate("Module_Name", "Table_Name", "view_column_name" "Fields_Array");
-        
+
 		Module::generate("Books", 'books', 'name', [
             ["address",     "Address",      "Address",  false, "",          0,  1000,   true],
             ["restricted",  "Restricted",   "Checkbox", false, false,       0,  0,      false],
@@ -68,6 +69,7 @@ class CreateDepartmentsTable extends Migration
     public function down()
     {
         if (Schema::hasTable('departments')) {
+            Schema::disableForeignKeyConstraints();
             Schema::drop('departments');
         }
     }
