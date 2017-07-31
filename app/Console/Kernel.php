@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        // Commands\Inspire::class,
+        Commands\SendReminders::class,
     ];
 
     /**
@@ -26,5 +26,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        // Sending document upload reminders.
+        $schedule->command('SendReminders')->daily();
     }
 }

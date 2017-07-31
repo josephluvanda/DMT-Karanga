@@ -19,6 +19,7 @@ class CreateDocumentsTable extends Migration
             ["description", "Description", "Textarea", false, "", 0, 0, true],
             ["tags", "Tags", "Taginput", false, [], 0, 0, false],
             ["public", "Is Public", "Checkbox", false, "0", 0, 0, false],
+            ["added_by", "Added By", "TextField", false, "", 0, 256, false],
         ]);
     }
 
