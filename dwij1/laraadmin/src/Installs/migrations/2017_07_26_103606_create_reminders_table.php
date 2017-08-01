@@ -21,6 +21,11 @@ class CreateRemindersTable extends Migration
             ["email", "Email", "Email", false, "", 0, 256, false],
             ["data_category", "Data Category", "Dropdown", false, "", 0, 0, false, "@categories"],
             ["duration", "Duration", "Dropdown", false, "", 0, 0, false, ["Daily","Weekly","Monthly","Yearly"]],
+<<<<<<< HEAD
+            ["days_to_send", "Days To Send", "TextField", false, "0", 0, 256, false],
+            ["added_by", "Added By", "TextField", false, "", 0, 256, false],
+=======
+>>>>>>> master
         ]);
 		
 		/*
