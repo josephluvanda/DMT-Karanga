@@ -12,7 +12,9 @@ class AddBlockOnColumnToUsersTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+        $table->timestamp('blocked_on')->nullable();
+      });
     }
 
     /**
@@ -22,6 +24,12 @@ class AddBlockOnColumnToUsersTable extends Migration
      */
     public function down()
     {
-        //
+      Schema::table('users', function (Blueprint $table) {
+
+        if(Schema::hasColumn('users','blocked_on')){
+          $table->dropColumn('blocked_on');
+        }
+
+      });
     }
 }

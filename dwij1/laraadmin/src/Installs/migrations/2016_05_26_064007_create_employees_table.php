@@ -4,7 +4,6 @@
  * Help: http://laraadmin.com
  */
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Dwij\Laraadmin\Models\Module;
@@ -33,6 +32,9 @@ class CreateEmployeesTable extends Migration
             ["date_hire", "Hiring Date", "Date", false, "date('Y-m-d')", 0, 0, false],
             ["date_left", "Resignation Date", "Date", false, "1990-01-01", 0, 0, false],
             ["salary_cur", "Current Salary", "Decimal", false, "0.0", 0, 2, false],
+            ["region_id", "Region", "Dropdown", false, "", 0, 0, false, "@regions"],
+            ["district_id", "District", "Dropdown", false, "", 0, 0, false, "@districts"],
+            ["ward_id", "Ward", "Dropdown", false, "", 0, 0, false, "@wards"],
         ]);
 		
 		/*

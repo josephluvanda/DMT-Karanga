@@ -210,6 +210,7 @@ class RegistrationsController extends Controller
 						'type' => "Employee",
 					]);
 					$defaultRole = Role::where('name', 'GUEST')->first();
+				//Log::info($defaultRole);
 					// update user role
 					//$user->detachRoles();
 					$user->attachRole($defaultRole);

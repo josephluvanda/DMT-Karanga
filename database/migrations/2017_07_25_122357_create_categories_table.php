@@ -16,7 +16,6 @@ class CreateCategoriesTable extends Migration
             ["title", "Title", "TextField", false, "", 0, 256, true],
             ["description", "Description", "Textarea", false, "", 0, 0, false],
             ["slug", "Slug", "TextField", false, "", 0, 256, true],
-            ["added_by", "Added By", "TextField", false, "", 0, 256, false],
         ]);
     }
 
