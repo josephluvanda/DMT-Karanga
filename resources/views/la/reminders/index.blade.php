@@ -63,7 +63,6 @@
 					@la_input($module, 'data_category')
 					@la_input($module, 'duration')
 					--}}
-
 					<div class="form-group">
 						<input class="form-control" placeholder="Enter Added By" data-rule-maxlength="256" name="added_by" value="{{ Auth::user()->id }}" type="hidden">
 					</div>
