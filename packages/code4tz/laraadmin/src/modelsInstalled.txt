@@ -1,0 +1,12 @@
+User
+Role
+Permission
+Employee
+Department
+Upload
+Organization
+Backup
+Registration
+District
+Region
+Ward
