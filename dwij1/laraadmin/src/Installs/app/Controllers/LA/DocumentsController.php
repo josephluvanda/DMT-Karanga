@@ -23,7 +23,7 @@ class DocumentsController extends Controller
 {
 	public $show_action = true;
 	public $view_col = 'title';
-	public $listing_cols = ['id', 'title', 'category', 'document', 'description', 'ward', 'tags', 'public', 'added_by'];
+	public $listing_cols = ['id', 'title', 'category', 'document', 'description', 'ward', 'tags'];
 	
 	public function __construct() {
 		// Field Access of Listing Columns
@@ -214,10 +214,16 @@ class DocumentsController extends Controller
 		$data = $out->getData();
 
 		$fields_popup = ModuleFields::getModuleFields('Documents');
+
+		$tags_column_index = 0;
 		
 		for($i=0; $i < count($data->data); $i++) {
 			for ($j=0; $j < count($this->listing_cols); $j++) { 
 				$col = $this->listing_cols[$j];
+
+				// Finding tags column index
+				if($col == "tags") $tags_column_index = $j;
+				
 				if($fields_popup[$col] != null && starts_with($fields_popup[$col]->popup_vals, "@")) {
 					$data->data[$i][$j] = ModuleFields::getFieldValue($fields_popup[$col], $data->data[$i][$j]);
 				}
@@ -227,6 +233,20 @@ class DocumentsController extends Controller
 				// else if($col == "author") {
 				//    $data->data[$i][$j];
 				// }
+			}
+
+			// Handling tags display
+			if($data->data[$i][$tags_column_index] != ""){
+				$tags = preg_replace('/[\"\[\]]/','',$data->data[$i][$tags_column_index]);
+				$tags = explode(",",$tags);
+				
+				$tags_elements = "";
+
+				foreach($tags as $tag){
+					$tags_elements .= '<span class="label label-primary">'.$tag.'</span>&nbsp;&nbsp;';
+				}
+
+				$data->data[$i][$tags_column_index] = $tags_elements;
 			}
 			
 			if($this->show_action) {
