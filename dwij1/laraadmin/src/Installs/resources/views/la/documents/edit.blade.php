@@ -1,14 +1,14 @@
 @extends("la.layouts.app")
 
 @section("contentheader_title")
-	<a href="{{ url(config('laraadmin.adminRoute') . '/documents') }}">Documents</a> :
+	<a href="{{ url(config('laraadmin.adminRoute') . '/documents') }}">Document</a> :
 @endsection
 @section("contentheader_description", $document->$view_col)
 @section("section", "Documents")
 @section("section_url", url(config('laraadmin.adminRoute') . '/documents'))
 @section("sub_section", "Edit")
 
-@section("htmlheader_title", "Document Edit : ".$document->$view_col)
+@section("htmlheader_title", "Documents Edit : ".$document->$view_col)
 
 @section("main-content")
 
@@ -37,8 +37,10 @@
 					@la_input($module, 'category')
 					@la_input($module, 'document')
 					@la_input($module, 'description')
+					@la_input($module, 'ward')
 					@la_input($module, 'tags')
 					@la_input($module, 'public')
+					@la_input($module, 'added_by')
 					--}}
                     <br>
 					<div class="form-group">
