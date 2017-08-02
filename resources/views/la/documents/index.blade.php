@@ -61,15 +61,13 @@
 					{{--
 					@la_input($module, 'title')
 					@la_input($module, 'category')
+					@la_input($module, 'document')
 					@la_input($module, 'description')
+					@la_input($module, 'ward')
 					@la_input($module, 'tags')
 					@la_input($module, 'public')
-					@la_input($module, 'document')
+					@la_input($module, 'added_by')
 					--}}
-
-					<div class="form-group">
-						<input class="form-control" placeholder="Enter Added By" data-rule-maxlength="256" name="added_by" value="{{ Auth::user()->id }}" type="hidden">
-					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
