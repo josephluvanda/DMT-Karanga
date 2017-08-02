@@ -1,0 +1,394 @@
+body{
+    background: #eceff0;
+    font-family: 'Roboto', sans-serif;
+}
+
+body header{
+    background: #45525b;
+    height: 90px;
+}
+
+.brand h1{
+    color: #76888c;
+}
+
+.brand h1 span{
+    color: #e86e62;
+}
+
+.brand-form h1{
+    color: #76888c;
+    text-align: center;
+}
+
+.brand-form h1 span{
+    color: #e86e62;
+}
+
+.brand img{
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+.navs{
+    text-align: right;
+}
+
+.navs ul{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.navs ul li{
+    color:#76888c;
+    text-transform: uppercase;
+    font-size: 18px;
+    float: right;
+    margin-left: 40px;
+    line-height: 90px;
+    font-weight: bold;
+}
+
+.navs ul li a:link{
+    text-decoration: none;
+    color:#76888c;
+}
+
+.navs ul li a:active{
+    text-decoration: none;
+    color:#76888c;
+}
+
+.navs ul li a:visited{
+    text-decoration: none;
+    color:#76888c;
+}
+
+.navs ul li a:hover{
+    text-decoration: none;
+    color:#dadfe0;
+}
+
+.navs ul li.active{
+    color:#e86e62;
+}
+
+.navs ul li.active a:link{
+    text-decoration: none;
+    color:#e86e62;
+}
+
+.navs ul li.active a:active{
+    text-decoration: none;
+    color:#e86e62;
+}
+
+.navs ul li.active a:visited{
+    text-decoration: none;
+    color:#e86e62;
+}
+
+.navs ul li.active a:hover{
+    text-decoration: none;
+    color:#dadfe0;
+}
+
+
+.search{
+    background: #dadfe0;
+    height: 80px;
+}
+
+.search h4{
+    color: #788a8e;
+    font-weight: bold;
+    line-height: 60px;
+}
+
+#custom-search-input{
+    margin-top: 14px;
+    padding: 0px;
+    border: none;
+    border-radius: 0px;
+    background-color: #fff;
+}
+
+#custom-search-input input{
+    border: 0;
+    box-shadow: none;
+}
+
+#custom-search-input button{
+    margin: 2px 0 0 0;
+    background: none;
+    box-shadow: none;
+    border: 0;
+    color: #788a8e;
+    padding: 0 8px 0 10px;
+}
+
+#custom-search-input button:hover{
+    border: 0;
+    box-shadow: none;
+}
+
+#custom-search-input .glyphicon-search{
+    font-size: 20px;
+}
+
+.contents{
+    min-height: 900px;
+    padding-bottom: 100px;
+}
+
+.featured{
+    color: #98a6a9;
+    text-align: center;
+}
+
+.featured h1{
+    margin-bottom: 15px;
+}
+
+.featured hr{
+    background: #98a6a9;
+    height: 1px;
+    margin-left: 40%;
+    margin-right: 40%;
+}
+
+.dataset{
+    height: 400px;
+    text-align: center;
+    color: #788a8e;
+    padding: 30px;
+    margin-bottom: 40px;
+}
+
+.dataset h3{
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.dataset img{
+    margin-bottom: 30px;
+    margin-top: 40px;
+}
+
+.type-1, .background_grey{
+    background: #dadfe0;
+}
+
+.type-2, .background_white{
+    background: #fff;
+}
+
+.dataset-row{
+    height: 200px;
+    color: #788a8e;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.dataset-row h3{
+    margin-top: 0px;
+}
+
+.border-bottom-10px-yellow, .border_bottom_yellow{
+    border-bottom: 10px solid #fbcf61;
+}
+
+.border-bottom-10px-red, .border_bottom_red{
+    border-bottom: 10px solid #ff6f6f;
+}
+
+.border-bottom-10px-green, .border_bottom_green{
+    border-bottom: 10px solid #a8d164;
+}
+
+.border-top-10px-yellow{
+    border-top: 10px solid #fbcf61;
+}
+
+.border-top-10px-red{
+    border-top: 10px solid #ff6f6f;
+}
+
+.border-top-10px-green{
+    border-top: 10px solid #a8d164;
+}
+
+.border-right-10px-yellow{
+    border-right: 10px solid #fbcf61;
+}
+
+.border-right-10px-red{
+    border-right: 10px solid #ff6f6f;
+}
+
+.border-right-10px-green{
+    border-right: 10px solid #a8d164;
+}
+
+.yellow{
+    color: #fbcf61;
+}
+
+.red{
+    color: #ff6f6f;
+}
+
+.reen{
+    color: #a8d164;
+}
+
+footer{
+    border-top: 10px solid #fbcf61;
+    background: #dadfe0;
+    height: 120px;
+    padding: 20px;
+    color: #89999c;
+    text-align: center;
+}
+
+footer h4{
+
+}
+
+.modal {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.modal-dialog{
+    margin-top: 5%;
+    opacity: 1;
+}
+
+.modal-dialog .modal-content{
+    border-radius: 0px;
+    border: 0px;
+}
+
+.modal-header{
+    border-bottom: 0px;
+    padding-bottom: 25  px;
+    height: auto;
+    overflow: auto;
+}
+
+.modal-body{
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 60px;
+    color: #76888c;
+}
+
+.modal-body input, .modal-body button{
+    height: 45px;
+    border-radius: 0px;
+    margin-bottom: 20px;
+}
+
+.modal-body textarea{
+    border-radius: 0px;
+    margin-bottom: 25px;
+}
+
+.modal-footer{
+    border-top: 0px;
+}
+
+.resource-horizontal{
+    height: 200px;
+    color: #788a8e;
+    padding: 30px;
+}
+
+.resource-horizontal h3{
+    font-weight: bold;
+    margin-top: 0px;
+}
+
+.resource-horizontal-type-1{
+    background: #dadfe0;   
+}
+
+.btn-green { 
+  color: #ffffff; 
+  background-color: #A8D164; 
+  border-color: #A8D164;
+  font-weight: bold;
+  border-radius: 0px;
+} 
+ 
+.btn-green:hover, 
+.btn-green:focus, 
+.btn-green:active, 
+.btn-green.active, 
+.open .dropdown-toggle.btn-green { 
+  color: #ffffff; 
+  background-color: #80AB3C; 
+  border-color: #A8D164; 
+} 
+ 
+.btn-green:active, 
+.btn-green.active, 
+.open .dropdown-toggle.btn-green { 
+  background-image: none; 
+} 
+ 
+.btn-green.disabled, 
+.btn-green[disabled], 
+fieldset[disabled] .btn-green, 
+.btn-green.disabled:hover, 
+.btn-green[disabled]:hover, 
+fieldset[disabled] .btn-green:hover, 
+.btn-green.disabled:focus, 
+.btn-green[disabled]:focus, 
+fieldset[disabled] .btn-green:focus, 
+.btn-green.disabled:active, 
+.btn-green[disabled]:active, 
+fieldset[disabled] .btn-green:active, 
+.btn-green.disabled.active, 
+.btn-green[disabled].active, 
+fieldset[disabled] .btn-green.active { 
+  background-color: #A8D164; 
+  border-color: #A8D164; 
+} 
+ 
+.btn-green .badge { 
+  color: #A8D164; 
+  background-color: #ffffff; 
+}
+
+.results{
+
+}
+
+.results h2{
+    font-weight: bold;
+    margin-top: 0px;
+    color: #76888c;
+}
+
+.vertical-menus .list-group-item{
+    background: #dadfe0;
+    border-radius: 0px;
+    color:#76888c;
+    font-size: 17px;
+    font-weight: bold;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.vertical-menus .list-group-item.active{
+    border: 0px;
+    background: #fbcf61;
+    color: #fff;
+}
+
+.vertical-menus .list-group-item.child{
+    background: #FFF;
+    padding-left: 40px;
+}

@@ -36,7 +36,7 @@
                 </div>
                 <div class="col-md-8 navs">
                     <ul>
-                        <li><a href="#" data-toggle="modal" data-target="#LoginModal">Login</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#LoginModal" data-backdrop="static">Login</a></li>
                         <li><a href="#" data-toggle="modal" data-target="#JoinModal">Join</a></li>
                         <li><a href="/datasets">Datasets</a></li>
                         <li class="active"><a href="/">Home</a></li>
@@ -186,20 +186,23 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <div class="box-body" style="overflow:auto;">
-                        <div class="form-group">
-                            <label for="email">Email Adress</label>
-                            <input type="email" class="form-control" id="email" placeholder="Email Address">
+                    <form action="{{ url('/login') }}" method="post" id="login-form">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <div class="box-body" style="overflow:auto;">
+                            <div class="form-group">
+                                <label for="email">Email Adress</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email Address">
+                            </div>
+                            <div class="form-group">
+                                <label for="pwd">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" id="login" class="btn btn-green pull-right col-md-3">LOGIN</button>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="pwd">Password</label>
-                            <input type="password" class="form-control" id="pwd" placeholder="Password">
-                        </div>
-                        <div class="form-group">
-                            <button type="button" class="btn btn-green pull-right col-md-3" data-dismiss="modal">LOGIN</button>
-                        </div>
-                    </div>
-                </div>
+                    </form>
+                </div><!-- close div .modal-body -->
             </div>
         </div>
     </div>
@@ -245,6 +248,40 @@
     <script src="{{ asset('la-assets/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
     <!-- Bootstrap 3.3.2 JS -->
     <script src="{{ asset('la-assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
+
+    <script>
+        /*
+        $(document).ready(function(){
+            $('#login').click(function(){
+                var formData = {
+                    'email' : $('#email').val(),
+                    'password'  : $('#password').val()
+                };
+
+                $.ajax({
+                    type    : 'POST',
+                    url : '/login',
+                    data    : formData,
+                    dataType    : 'json',
+                    encode  : true
+                })
+                .done(function(data){
+                    console.log(data);
+                });
+            });
+        });*/
+
+        $('#login-form').on('submit',function(e){
+            e.preventDefault();
+            console.log('Form is submitted');
+
+            var _token = $('input[name="_token"]').val();
+
+            $.post($(this).attr('action'), {_token: _token, email: $('#email').val(), password: $('#password').val()}, function(response){
+                console.log(response);
+            });
+        });
+    </script>
 </body>
 
 <html>

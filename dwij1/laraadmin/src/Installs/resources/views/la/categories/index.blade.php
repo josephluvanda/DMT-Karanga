@@ -59,14 +59,14 @@
                     @la_form($module)
 					
 					{{--
+					@la_input($module, 'background_color')
+					@la_input($module, 'border_bottom')
 					@la_input($module, 'title')
+					@la_input($module, 'category_image')
 					@la_input($module, 'description')
 					@la_input($module, 'slug')
+					@la_input($module, 'added_by')
 					--}}
-
-					<div class="form-group">
-						<input class="form-control" placeholder="Enter Added By" data-rule-maxlength="256" name="added_by" value="{{ Auth::user()->id }}" type="hidden">
-					</div>
 				</div>
 			</div>
 			<div class="modal-footer">

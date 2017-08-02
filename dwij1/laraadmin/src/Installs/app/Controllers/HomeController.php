@@ -9,6 +9,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
+use App\Models\Category;
+use App\Models\Upload;
+
 /**
  * Class HomeController
  * @package App\Http\Controllers
@@ -35,7 +38,14 @@ class HomeController extends Controller
         $roleCount = \App\Role::count();
 		if($roleCount != 0) {
 			if($roleCount != 0) {
-				return view('home');
+                $categories = Category::all();
+
+                if($categories){
+                    for($x = 0; $x < count($categories); $x++){
+                        $categories[$x]->upload = Upload::find($categories[$x]->category_image);
+                    }
+                }
+				return view('home',compact('categories'));
 			}
 		} else {
 			return view('errors.error', [
