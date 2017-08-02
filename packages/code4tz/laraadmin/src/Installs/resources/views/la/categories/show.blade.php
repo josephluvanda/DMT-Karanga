@@ -20,15 +20,18 @@
 			</div>
 		</div>
 		<div class="col-md-1 actions">
-			@la_access("Categories", "edit")
-				<a href="{{ url(config('laraadmin.adminRoute') . '/categories/'.$category->id.'/edit') }}" class="btn btn-xs btn-edit btn-default"><i class="fa fa-pencil"></i></a><br>
-			@endla_access
+			<!-- Validating user to delete -->
+			@if (Auth::user()->id == $category->id)
+				@la_access("Categories", "edit")
+					<a href="{{ url(config('laraadmin.adminRoute') . '/categories/'.$category->id.'/edit') }}" class="btn btn-xs btn-edit btn-default"><i class="fa fa-pencil"></i></a><br>
+				@endla_access
 
-			@la_access("Categories", "delete")
-				{{ Form::open(['route' => [config('laraadmin.adminRoute') . '.categories.destroy', $category->id], 'method' => 'delete', 'style'=>'display:inline']) }}
-					<button class="btn btn-default btn-delete btn-xs" type="submit"><i class="fa fa-times"></i></button>
-				{{ Form::close() }}
-			@endla_access
+				@la_access("Categories", "delete")
+					{{ Form::open(['route' => [config('laraadmin.adminRoute') . '.categories.destroy', $category->id], 'method' => 'delete', 'style'=>'display:inline']) }}
+						<button class="btn btn-default btn-delete btn-xs" type="submit"><i class="fa fa-times"></i></button>
+					{{ Form::close() }}
+				@endla_access
+			@endif
 		</div>
 	</div>
 

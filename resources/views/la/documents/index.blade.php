@@ -61,10 +61,12 @@
 					{{--
 					@la_input($module, 'title')
 					@la_input($module, 'category')
+					@la_input($module, 'document')
 					@la_input($module, 'description')
+					@la_input($module, 'ward')
 					@la_input($module, 'tags')
 					@la_input($module, 'public')
-					@la_input($module, 'document')
+					@la_input($module, 'added_by')
 					--}}
 				</div>
 			</div>

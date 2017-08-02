@@ -8,7 +8,7 @@
 @section('main-content')
 <div id="page-content" class="profile2">
 	<div class="bg-primary clearfix">
-		<div class="col-md-11">
+		<div class="col-md-10">
 			<div class="row">
 				<div class="col-md-3">
 					<!--<img class="profile-image" src="{{ asset('la-assets/img/avatar5.png') }}" alt="">-->
@@ -49,12 +49,14 @@
 						@la_display($module, 'category')
 						@la_display($module, 'document')
 						@la_display($module, 'description')
+						@la_display($module, 'ward')
 						@la_display($module, 'tags')
+						@la_display($module, 'public')
+						@la_display($module, 'added_by')
 					</div>
 				</div>
 			</div>
 		</div>
-		
 	</div>
 	</div>
 	</div>
