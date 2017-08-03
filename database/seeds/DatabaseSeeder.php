@@ -11,6 +11,7 @@ use Dwij\Laraadmin\Models\LAConfigs;
 use App\Role;
 use App\Permission;
 use App\Models\Department;
+use Illuminate\Support\Facades\Log;
 
 class DatabaseSeeder extends Seeder
 {
@@ -62,6 +63,7 @@ class DatabaseSeeder extends Seeder
 					"parent" => $parent
 				]);
 			}
+
 		}
 
 		// Create Administration Department
@@ -175,5 +177,6 @@ class DatabaseSeeder extends Seeder
 		$this->command->info('Roles table seeded');
 
 		$this->call('TopologySeeder');
+		$this->call('DmtMenuSeeder');
 	}
 }

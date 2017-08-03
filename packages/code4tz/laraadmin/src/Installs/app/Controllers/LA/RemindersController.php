@@ -24,7 +24,7 @@ class RemindersController extends Controller
 	public $show_action = true;
 	public $view_col = 'email';
 	public $listing_cols = ['id', 'email', 'data_category', 'duration'];
-	
+
 	public function __construct() {
 		// Field Access of Listing Columns
 		if(\Dwij\Laraadmin\Helpers\LAHelper::laravel_ver() == 5.3) {
@@ -36,7 +36,7 @@ class RemindersController extends Controller
 			$this->listing_cols = ModuleFields::listingColumnAccessScan('Reminders', $this->listing_cols);
 		}
 	}
-	
+
 	/**
 	 * Display a listing of the Reminders.
 	 *
@@ -45,7 +45,7 @@ class RemindersController extends Controller
 	public function index()
 	{
 		$module = Module::get('Reminders');
-		
+
 		if(Module::hasAccess($module->id)) {
 			return View('la.reminders.index', [
 				'show_actions' => $this->show_action,
@@ -76,11 +76,11 @@ class RemindersController extends Controller
 	public function store(Request $request)
 	{
 		if(Module::hasAccess("Reminders", "create")) {
-		
+
 			$rules = Module::validateRules("Reminders", $request);
-			
+
 			$validator = Validator::make($request->all(), $rules);
-			
+
 			if ($validator->fails()) {
 				return redirect()->back()->withErrors($validator)->withInput();
 			}
@@ -94,11 +94,11 @@ class RemindersController extends Controller
 			else $days_to_send = 0;
 
 			$request->days_to_send = $days_to_send;
-			
+
 			$insert_id = Module::insert("Reminders", $request);
-			
+
 			return redirect()->route(config('laraadmin.adminRoute') . '.reminders.index');
-			
+
 		} else {
 			return redirect(config('laraadmin.adminRoute')."/");
 		}
@@ -113,12 +113,12 @@ class RemindersController extends Controller
 	public function show($id)
 	{
 		if(Module::hasAccess("Reminders", "view")) {
-			
+
 			$reminder = Reminder::find($id);
 			if(isset($reminder->id)) {
 				$module = Module::get('Reminders');
 				$module->row = $reminder;
-				
+
 				return view('la.reminders.show', [
 					'module' => $module,
 					'view_col' => $this->view_col,
@@ -144,13 +144,13 @@ class RemindersController extends Controller
 	 */
 	public function edit($id)
 	{
-		if(Module::hasAccess("Reminders", "edit")) {			
+		if(Module::hasAccess("Reminders", "edit")) {
 			$reminder = Reminder::find($id);
-			if(isset($reminder->id)) {	
+			if(isset($reminder->id)) {
 				$module = Module::get('Reminders');
-				
+
 				$module->row = $reminder;
-				
+
 				return view('la.reminders.edit', [
 					'module' => $module,
 					'view_col' => $this->view_col,
@@ -176,19 +176,19 @@ class RemindersController extends Controller
 	public function update(Request $request, $id)
 	{
 		if(Module::hasAccess("Reminders", "edit")) {
-			
+
 			$rules = Module::validateRules("Reminders", $request, true);
-			
+
 			$validator = Validator::make($request->all(), $rules);
-			
+
 			if ($validator->fails()) {
 				return redirect()->back()->withErrors($validator)->withInput();;
 			}
-			
+
 			$insert_id = Module::updateRow("Reminders", $request, $id);
-			
+
 			return redirect()->route(config('laraadmin.adminRoute') . '.reminders.index');
-			
+
 		} else {
 			return redirect(config('laraadmin.adminRoute')."/");
 		}
@@ -204,14 +204,14 @@ class RemindersController extends Controller
 	{
 		if(Module::hasAccess("Reminders", "delete")) {
 			Reminder::find($id)->delete();
-			
+
 			// Redirecting to index() method
 			return redirect()->route(config('laraadmin.adminRoute') . '.reminders.index');
 		} else {
 			return redirect(config('laraadmin.adminRoute')."/");
 		}
 	}
-	
+
 	/**
 	 * Datatable Ajax fetch
 	 *
@@ -224,9 +224,9 @@ class RemindersController extends Controller
 		$data = $out->getData();
 
 		$fields_popup = ModuleFields::getModuleFields('Reminders');
-		
+
 		for($i=0; $i < count($data->data); $i++) {
-			for ($j=0; $j < count($this->listing_cols); $j++) { 
+			for ($j=0; $j < count($this->listing_cols); $j++) {
 				$col = $this->listing_cols[$j];
 				if($fields_popup[$col] != null && starts_with($fields_popup[$col]->popup_vals, "@")) {
 					$data->data[$i][$j] = ModuleFields::getFieldValue($fields_popup[$col], $data->data[$i][$j]);
@@ -238,13 +238,13 @@ class RemindersController extends Controller
 				//    $data->data[$i][$j];
 				// }
 			}
-			
+
 			if($this->show_action) {
 				$output = '';
 				if(Module::hasAccess("Reminders", "edit")) {
 					$output .= '<a href="'.url(config('laraadmin.adminRoute') . '/reminders/'.$data->data[$i][0].'/edit').'" class="btn btn-warning btn-xs" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-edit"></i></a>';
 				}
-				
+
 				if(Module::hasAccess("Reminders", "delete")) {
 					$output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.reminders.destroy', $data->data[$i][0]], 'method' => 'delete', 'style'=>'display:inline']);
 					$output .= ' <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-times"></i></button>';
