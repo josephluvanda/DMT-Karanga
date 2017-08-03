@@ -11,6 +11,7 @@ use Dwij\Laraadmin\Models\LAConfigs;
 use App\Role;
 use App\Permission;
 use App\Models\Department;
+use Illuminate\Support\Facades\Log;
 
 class DatabaseSeeder extends Seeder
 {
@@ -34,20 +35,28 @@ class DatabaseSeeder extends Seeder
 			"parent" => 0,
 			"hierarchy" => 1
 		]);
+		//Temporary hack to bypass custom modules creation
+		$defaultModules = ["Uploads", "Organizations","Users", "Departments", "Employees", "Roles", "Permissions"];
+
 		foreach ($modules as $module) {
 			$parent = 0;
 			if($module->name != "Backups") {
 				if(in_array($module->name, ["Users", "Departments", "Employees", "Roles", "Permissions"])) {
 					$parent = $teamMenu->id;
 				}
-				Menu::create([
-					"name" => $module->name,
-					"url" => $module->name_db,
-					"icon" => $module->fa_icon,
-					"type" => 'module',
-					"parent" => $parent
-				]);
+				if(in_array($module->name, $defaultModules)){
+					Menu::create([
+						"name" => $module->name,
+						"url" => $module->name_db,
+						"icon" => $module->fa_icon,
+						"type" => 'module',
+						"parent" => $parent
+					]);
+					#Log::info('******************'.$module->name.'***************');
+				}
+
 			}
+
 		}
 
 		// Create Administration Department
@@ -161,5 +170,6 @@ class DatabaseSeeder extends Seeder
 		$this->command->info('Roles table seeded');
 
 		$this->call('TopologySeeder');
+		$this->call('DmtMenuSeeder');
 	}
 }
