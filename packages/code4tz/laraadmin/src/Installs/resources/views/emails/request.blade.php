@@ -7,7 +7,7 @@
   <h5>Credentials</h5>
   <label>Username:</label>{{ $username }}<br>
   <label>Temporary Password:</label>{{ $password }} (Please reset password after login)
-  <p>Please <a href='{{ config("laraadmin.server_url") }}/login' target="_blank">login</a> to complete your profile</p>
+  <p>Please <a href='{{ url("/login") }}' target="_blank">login</a> to complete your profile</p>
 @endif
 </body>
 </html>
