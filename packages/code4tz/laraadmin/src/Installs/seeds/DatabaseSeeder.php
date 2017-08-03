@@ -34,11 +34,25 @@ class DatabaseSeeder extends Seeder
 			"parent" => 0,
 			"hierarchy" => 1
 		]);
+
+		// Generating Geographical Menu
+		$geographicalMenu = Menu::create([
+			"name" => "Geographical",
+			"url" => "#",
+			"icon" => "fa-map",
+			"type" => 'custom',
+			"parent" => 0,
+			"hierarchy" => 1
+		]);
+
 		foreach ($modules as $module) {
 			$parent = 0;
 			if($module->name != "Backups") {
 				if(in_array($module->name, ["Users", "Departments", "Employees", "Roles", "Permissions"])) {
 					$parent = $teamMenu->id;
+				}
+				if(in_array($module->name, ["Regions", "Districts", "Wards"])) {
+					$parent = $geographicalMenu->id;
 				}
 				Menu::create([
 					"name" => $module->name,
