@@ -23,8 +23,8 @@ class EmployeesController extends Controller
 {
 	public $show_action = true;
 	public $view_col = 'name';
-	public $listing_cols = ['id', 'name', 'designation', 'gender', 'mobile', 'mobile2', 'email', 'dept', 'city', 'address', 'about', 'date_birth', 'date_hire', 'date_left', 'salary_cur', 'region_id', 'district_id', 'ward_id'];
-	
+	public $listing_cols = ['id', 'name', 'designation', 'gender', 'mobile', 'mobile2', 'email', 'dept','address'];
+
 	public function __construct() {
 		// Field Access of Listing Columns
 		if(\Dwij\Laraadmin\Helpers\LAHelper::laravel_ver() == 5.3) {
@@ -36,7 +36,7 @@ class EmployeesController extends Controller
 			$this->listing_cols = ModuleFields::listingColumnAccessScan('Employees', $this->listing_cols);
 		}
 	}
-	
+
 	/**
 	 * Display a listing of the Employees.
 	 *
@@ -45,7 +45,7 @@ class EmployeesController extends Controller
 	public function index()
 	{
 		$module = Module::get('Employees');
-		
+
 		if(Module::hasAccess($module->id)) {
 			return View('la.employees.index', [
 				'show_actions' => $this->show_action,
@@ -76,19 +76,19 @@ class EmployeesController extends Controller
 	public function store(Request $request)
 	{
 		if(Module::hasAccess("Employees", "create")) {
-		
+
 			$rules = Module::validateRules("Employees", $request);
-			
+
 			$validator = Validator::make($request->all(), $rules);
-			
+
 			if ($validator->fails()) {
 				return redirect()->back()->withErrors($validator)->withInput();
 			}
-			
+
 			$insert_id = Module::insert("Employees", $request);
-			
+
 			return redirect()->route(config('laraadmin.adminRoute') . '.employees.index');
-			
+
 		} else {
 			return redirect(config('laraadmin.adminRoute')."/");
 		}
@@ -103,12 +103,12 @@ class EmployeesController extends Controller
 	public function show($id)
 	{
 		if(Module::hasAccess("Employees", "view")) {
-			
+
 			$employee = Employee::find($id);
 			if(isset($employee->id)) {
 				$module = Module::get('Employees');
 				$module->row = $employee;
-				
+
 				return view('la.employees.show', [
 					'module' => $module,
 					'view_col' => $this->view_col,
@@ -134,13 +134,13 @@ class EmployeesController extends Controller
 	 */
 	public function edit($id)
 	{
-		if(Module::hasAccess("Employees", "edit")) {			
+		if(Module::hasAccess("Employees", "edit")) {
 			$employee = Employee::find($id);
-			if(isset($employee->id)) {	
+			if(isset($employee->id)) {
 				$module = Module::get('Employees');
-				
+
 				$module->row = $employee;
-				
+
 				return view('la.employees.edit', [
 					'module' => $module,
 					'view_col' => $this->view_col,
@@ -166,19 +166,19 @@ class EmployeesController extends Controller
 	public function update(Request $request, $id)
 	{
 		if(Module::hasAccess("Employees", "edit")) {
-			
+
 			$rules = Module::validateRules("Employees", $request, true);
-			
+
 			$validator = Validator::make($request->all(), $rules);
-			
+
 			if ($validator->fails()) {
 				return redirect()->back()->withErrors($validator)->withInput();;
 			}
-			
+
 			$insert_id = Module::updateRow("Employees", $request, $id);
-			
+
 			return redirect()->route(config('laraadmin.adminRoute') . '.employees.index');
-			
+
 		} else {
 			return redirect(config('laraadmin.adminRoute')."/");
 		}
@@ -194,14 +194,14 @@ class EmployeesController extends Controller
 	{
 		if(Module::hasAccess("Employees", "delete")) {
 			Employee::find($id)->delete();
-			
+
 			// Redirecting to index() method
 			return redirect()->route(config('laraadmin.adminRoute') . '.employees.index');
 		} else {
 			return redirect(config('laraadmin.adminRoute')."/");
 		}
 	}
-	
+
 	/**
 	 * Datatable Ajax fetch
 	 *
@@ -214,9 +214,9 @@ class EmployeesController extends Controller
 		$data = $out->getData();
 
 		$fields_popup = ModuleFields::getModuleFields('Employees');
-		
+
 		for($i=0; $i < count($data->data); $i++) {
-			for ($j=0; $j < count($this->listing_cols); $j++) { 
+			for ($j=0; $j < count($this->listing_cols); $j++) {
 				$col = $this->listing_cols[$j];
 				if($fields_popup[$col] != null && starts_with($fields_popup[$col]->popup_vals, "@")) {
 					$data->data[$i][$j] = ModuleFields::getFieldValue($fields_popup[$col], $data->data[$i][$j]);
@@ -228,13 +228,13 @@ class EmployeesController extends Controller
 				//    $data->data[$i][$j];
 				// }
 			}
-			
+
 			if($this->show_action) {
 				$output = '';
 				if(Module::hasAccess("Employees", "edit")) {
 					$output .= '<a href="'.url(config('laraadmin.adminRoute') . '/employees/'.$data->data[$i][0].'/edit').'" class="btn btn-warning btn-xs" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-edit"></i></a>';
 				}
-				
+
 				if(Module::hasAccess("Employees", "delete")) {
 					$output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.employees.destroy', $data->data[$i][0]], 'method' => 'delete', 'style'=>'display:inline']);
 					$output .= ' <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-times"></i></button>';
