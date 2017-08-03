@@ -18,6 +18,7 @@ use Dwij\Laraadmin\Models\Module;
 use Dwij\Laraadmin\Models\ModuleFields;
 
 use App\Models\Document;
+use App\Models\Upload;
 
 class DocumentsController extends Controller
 {
@@ -86,6 +87,24 @@ class DocumentsController extends Controller
 			}
 			
 			$insert_id = Module::insert("Documents", $request);
+
+			// Renaming the uploaded file
+			$upload = Upload::find($request->document);
+			$old_name = $upload->name;
+			$old_name_arr = explode(".",$old_name);
+
+			$date_append = date("Y-m-d-His-");
+			$new_name = $date_append.$request->title.".".$old_name_arr[count($old_name_arr)-1];
+
+			$old_path = $upload->path;
+			$new_path = storage_path('uploads')."/".$new_name;
+
+			rename($old_path,$new_path);
+
+			$upload->name = $new_name;
+			$upload->path = $new_path;
+
+			$upload->save();
 			
 			return redirect()->route(config('laraadmin.adminRoute') . '.documents.index');
 			
