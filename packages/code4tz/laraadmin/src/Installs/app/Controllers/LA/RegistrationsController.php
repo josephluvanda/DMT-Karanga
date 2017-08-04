@@ -219,9 +219,9 @@ class RegistrationsController extends Controller
 					$data['password'] = $password;
 				}
 				try {
-					Mail::send('emails.request', $data, function ($message) {
+					Mail::send('emails.request', $data, function ($message) use ($registration){
 							$message->from('joseph@codefortanzania.org', 'DMT - Karanga');
-							$message->to('joseph@codefortanzania.org');
+							$message->to($registration->email);
 							$message->subject("DMT - Karanga Request Status");
 					});
 				} catch (Exception $e) {
