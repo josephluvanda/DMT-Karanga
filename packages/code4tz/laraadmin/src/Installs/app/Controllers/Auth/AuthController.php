@@ -115,18 +115,18 @@ class AuthController extends Controller
         $employee = Employee::create([
             'name' => $data['name'],
             'designation' => "Super Admin",
-            'mobile' => "8888888888",
+            'mobile' => "0700000000",
             'mobile2' => "",
             'email' => $data['email'],
             'gender' => 'Male',
             'dept' => "1",
-            'city' => "Pune",
-            'address' => "Karve nagar, Pune 411030",
+            'city' => "Dar es Salaam",
+            'address' => "India/Zanaki St, Ilala",
             'about' => "About user / biography",
-            'date_birth' => date("Y-m-d"),
-            'date_hire' => date("Y-m-d"),
-            'date_left' => date("Y-m-d"),
-            'salary_cur' => 0,
+            #'date_birth' => date("Y-m-d"),
+          #  'date_hire' => date("Y-m-d"),
+          #  'date_left' => date("Y-m-d"),
+            #'salary_cur' => 0,
         ]);
 
         $user = User::create([

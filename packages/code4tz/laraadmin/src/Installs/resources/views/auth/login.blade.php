@@ -49,10 +49,9 @@
     </form>
 
     @include('auth.partials.social_login')
-
-    <a href="{{ url('/password/reset') }}">I forgot my password</a><br>
-    <!--<a href="{{ url('/register') }}" class="text-center">Register a new membership</a>-->
-
+    <br>
+    <a href="{{ url('/password/reset') }}">I forgot my password</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+    <a href="{{ url('/access_request') }}">Request Access</a>
 </div><!-- /.login-box-body -->
 
 </div><!-- /.login-box -->
