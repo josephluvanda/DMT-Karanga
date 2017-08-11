@@ -107,7 +107,7 @@ class EmployeesController extends Controller
 
 			// update user role
 			$user->detachRoles();
-			$role = Role::find($request->role);
+			$role = Role::where('name', 'GUEST')->first();
 			$user->attachRole($role);
 
 			if(env('MAIL_USERNAME') != null && env('MAIL_USERNAME') != "null" && env('MAIL_USERNAME') != "") {
@@ -176,9 +176,11 @@ class EmployeesController extends Controller
 				$module = Module::get('Employees');
 
 				$module->row = $employee;
-
+				// Get User Table Information
+				$user = User::where('context_id', '=', $id)->firstOrFail();
 				return view('la.employees.edit', [
 					'module' => $module,
+					'user' => $user,
 					'view_col' => $this->view_col,
 				])->with('employee', $employee);
 			} else {

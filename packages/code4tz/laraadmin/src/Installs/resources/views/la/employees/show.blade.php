@@ -121,3 +121,15 @@
 	</div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+$(function () {
+	@if($employee->id == Auth::user()->id || Entrust::hasRole("SUPER_ADMIN"))
+	$('#password-reset-form').validate({
+
+	});
+	@endif
+});
+</script>
+@endpush
