@@ -17,7 +17,13 @@ use Collective\Html\FormFacade as Form;
 use Dwij\Laraadmin\Models\Module;
 use Dwij\Laraadmin\Models\ModuleFields;
 
+use App\User;
 use App\Models\Employee;
+use App\Role;
+use Mail;
+use Log;
+use Dwij\Laraadmin\Models\LAConfigs;
+use Dwij\Laraadmin\Helpers\LAHelper;
 
 class EmployeesController extends Controller
 {
@@ -85,7 +91,34 @@ class EmployeesController extends Controller
 				return redirect()->back()->withErrors($validator)->withInput();
 			}
 
-			$insert_id = Module::insert("Employees", $request);
+			// generate password
+			$password = LAHelper::gen_password();
+
+			// Create Employee
+			$employee_id = Module::insert("Employees", $request);
+			// Create User
+			$user = User::create([
+				'name' => $request->name,
+				'email' => $request->email,
+				'password' => bcrypt($password),
+				'context_id' => $employee_id,
+				'type' => "Employee",
+			]);
+
+			// update user role
+			$user->detachRoles();
+			$role = Role::find($request->role);
+			$user->attachRole($role);
+
+			if(env('MAIL_USERNAME') != null && env('MAIL_USERNAME') != "null" && env('MAIL_USERNAME') != "") {
+				// Send mail to User his Password
+				Mail::send('emails.send_login_cred', ['user' => $user, 'password' => $password], function ($m) use ($user) {
+					$m->from('joseph@codefortanzania.org', 'Admininistrator');
+					$m->to($user->email, $user->name)->subject('DMT Karanga - Your Login Credentials');
+				});
+			} else {
+				Log::info("User created: username: ".$user->email." Password: ".$password);
+			}
 
 			return redirect()->route(config('laraadmin.adminRoute') . '.employees.index');
 
@@ -108,11 +141,14 @@ class EmployeesController extends Controller
 			if(isset($employee->id)) {
 				$module = Module::get('Employees');
 				$module->row = $employee;
+				// Get User Table Information
+				$user = User::where('context_id', '=', $id)->firstOrFail();
 
 				return view('la.employees.show', [
 					'module' => $module,
-					'view_col' => $this->view_col,
+					'view_col' => $module->view_col,
 					'no_header' => true,
+					'user' => $user,
 					'no_padding' => "no-padding"
 				])->with('employee', $employee);
 			} else {
@@ -175,7 +211,17 @@ class EmployeesController extends Controller
 				return redirect()->back()->withErrors($validator)->withInput();;
 			}
 
-			$insert_id = Module::updateRow("Employees", $request, $id);
+			$employee_id = Module::updateRow("Employees", $request, $id);
+
+			// Update User
+			$user = User::where('context_id', $employee_id)->first();
+			$user->name = $request->name;
+			$user->save();
+
+			// update user role
+			$user->detachRoles();
+			$role = Role::find($request->role);
+			$user->attachRole($role);
 
 			return redirect()->route(config('laraadmin.adminRoute') . '.employees.index');
 
@@ -203,47 +249,86 @@ class EmployeesController extends Controller
 	}
 
 	/**
-	 * Datatable Ajax fetch
-	 *
-	 * @return
-	 */
-	public function dtajax()
-	{
-		$values = DB::table('employees')->select($this->listing_cols)->whereNull('deleted_at');
-		$out = Datatables::of($values)->make();
-		$data = $out->getData();
+ * Datatable Ajax fetch
+ *
+ * @return
+ */
+public function dtajax(Request $request)
+{
+	$module = Module::get('Employees');
+	$listing_cols = $this->listing_cols;
 
-		$fields_popup = ModuleFields::getModuleFields('Employees');
+	$values = DB::table('employees')->select($listing_cols)->whereNull('deleted_at');
+	$out = Datatables::of($values)->make();
+	$data = $out->getData();
 
-		for($i=0; $i < count($data->data); $i++) {
-			for ($j=0; $j < count($this->listing_cols); $j++) {
-				$col = $this->listing_cols[$j];
-				if($fields_popup[$col] != null && starts_with($fields_popup[$col]->popup_vals, "@")) {
-					$data->data[$i][$j] = ModuleFields::getFieldValue($fields_popup[$col], $data->data[$i][$j]);
-				}
-				if($col == $this->view_col) {
-					$data->data[$i][$j] = '<a href="'.url(config('laraadmin.adminRoute') . '/employees/'.$data->data[$i][0]).'">'.$data->data[$i][$j].'</a>';
-				}
-				// else if($col == "author") {
-				//    $data->data[$i][$j];
-				// }
+	$fields_popup = ModuleFields::getModuleFields('Employees');
+
+	for($i=0; $i < count($data->data); $i++) {
+		for ($j=0; $j < count($listing_cols); $j++) {
+			$col = $listing_cols[$j];
+			if($fields_popup[$col] != null && starts_with($fields_popup[$col]->popup_vals, "@")) {
+				$data->data[$i][$j] = ModuleFields::getFieldValue($fields_popup[$col], $data->data[$i][$j]);
 			}
-
-			if($this->show_action) {
-				$output = '';
-				if(Module::hasAccess("Employees", "edit")) {
-					$output .= '<a href="'.url(config('laraadmin.adminRoute') . '/employees/'.$data->data[$i][0].'/edit').'" class="btn btn-warning btn-xs" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-edit"></i></a>';
-				}
-
-				if(Module::hasAccess("Employees", "delete")) {
-					$output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.employees.destroy', $data->data[$i][0]], 'method' => 'delete', 'style'=>'display:inline']);
-					$output .= ' <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-times"></i></button>';
-					$output .= Form::close();
-				}
-				$data->data[$i][] = (string)$output;
+			if($col == $module->view_col) {
+				$data->data[$i][$j] = '<a href="'.url(config('laraadmin.adminRoute') . '/employees/'.$data->data[$i][0]).'">'.$data->data[$i][$j].'</a>';
 			}
+			// else if($col == "author") {
+			//    $data->data[$i][$j];
+			// }
 		}
-		$out->setData($data);
-		return $out;
+
+		if($this->show_action) {
+			$output = '';
+			if(Module::hasAccess("Employees", "edit")) {
+				$output .= '<a href="'.url(config('laraadmin.adminRoute') . '/employees/'.$data->data[$i][0].'/edit').'" class="btn btn-warning btn-xs" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-edit"></i></a>';
+			}
+
+			if(Module::hasAccess("Employees", "delete")) {
+				$output .= Form::open(['route' => [config('laraadmin.adminRoute') . '.employees.destroy', $data->data[$i][0]], 'method' => 'delete', 'style'=>'display:inline']);
+				$output .= ' <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-times"></i></button>';
+				$output .= Form::close();
+			}
+			$data->data[$i][] = (string)$output;
+		}
+	}
+	$out->setData($data);
+	return $out;
+}
+/**
+     * Change Employee Password
+     *
+     * @return
+     */
+	public function change_password($id, Request $request) {
+
+		$validator = Validator::make($request->all(), [
+            'password' => 'required|min:6',
+			'password_confirmation' => 'required|min:6|same:password'
+        ]);
+
+		if ($validator->fails()) {
+			return \Redirect::to(config('laraadmin.adminRoute') . '/employees/'.$id)->withErrors($validator);
+		}
+
+		$employee = Employee::find($id);
+		$user = User::where("context_id", $employee->id)->where('type', 'Employee')->first();
+		$user->password = bcrypt($request->password);
+		$user->save();
+
+		\Session::flash('success_message', 'Password is successfully changed');
+
+		// Send mail to User his new Password
+		if(env('MAIL_USERNAME') != null && env('MAIL_USERNAME') != "null" && env('MAIL_USERNAME') != "") {
+			// Send mail to User his new Password
+			Mail::send('emails.send_login_cred_change', ['user' => $user, 'password' => $request->password], function ($m) use ($user) {
+				$m->from(LAConfigs::getByKey('default_email'), LAConfigs::getByKey('sitename'));
+				$m->to($user->email, $user->name)->subject('DMT Karanga - Login Credentials changed');
+			});
+		} else {
+			Log::info("User change_password: username: ".$user->email." Password: ".$request->password);
+		}
+
+		return redirect(config('laraadmin.adminRoute') . '/employees/'.$id.'#tab-account-settings');
 	}
 }
